@@ -133,7 +133,6 @@ def create_profile(user, tariff_id=1):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    credit = models.SmallIntegerField(default=0)
     name = models.CharField(max_length=255)
     email = models.EmailField(default='abc@gmail.com')
 

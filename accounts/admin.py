@@ -7,17 +7,11 @@ User = get_user_model()
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('phone', 'is_active', 'is_admin', 'is_staff', 'timestamp', 'get_credit')
-
-    def get_credit(self, obj):
-        return obj.profile.credit
-
-    get_credit.short_description = 'Credit'
-    get_credit.admin_order_field = 'profile__credit'
+    list_display = ('phone', 'is_active', 'is_admin', 'is_staff', 'timestamp')
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'credit', 'name', 'email')
+    list_display = ('user', 'name', 'email')
 
 
 admin.site.register(User, UserAdmin)

@@ -7,8 +7,7 @@ from accounts import models
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from accounts.Serializers import UserSerializer
-from django.contrib.auth import authenticate
+from accounts.Serializers import ProfileSerializer
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
@@ -18,6 +17,43 @@ from rest_framework.status import (
     HTTP_404_NOT_FOUND,
     HTTP_200_OK
 )
+
+
+def authenticate(request):
+    token = request.META['HTTP_AUTHORIZATION']
+    token = str(token).split(' ')[1]
+    phone = request.POST['phone']
+    owner_of_phone = User.objects.filter(phone=phone).first()
+    owner_of_token = Token.objects.filter(key=token).first()
+    if not (owner_of_phone or owner_of_token):
+        data = {'error': 'error: token or phone not found'}
+        return Response(data, status=HTTP_404_NOT_FOUND)
+    if owner_of_token.user == owner_of_phone:
+        return owner_of_phone
+    else:
+        data = {'error': 'error: invalid credentials'}
+        return Response(data, status=HTTP_400_BAD_REQUEST)
+
+
+@csrf_exempt
+@api_view(["GET"])
+@permission_classes((AllowAny,))
+def profile(request):
+    resp_profile = {'phone': '9367498998',
+                    'token': '12345678901234567890',
+                    'credit': 1000}
+    return Response(resp_profile)
+
+
+@csrf_exempt
+@api_view(["POST"])
+def my_profile_api(request):
+    user = authenticate(request)
+    if not isinstance(user, User):
+        print(user.__class__)
+        print(user)
+        return user
+    return Response(ProfileSerializer(user.profile).data)
 
 
 @permission_classes((AllowAny,))
