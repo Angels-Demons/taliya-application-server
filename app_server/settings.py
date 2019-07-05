@@ -26,7 +26,7 @@ SECRET_KEY = 'llo3f3audz9*^375kdo04jfct09o==33v^64!l0g^=v^%(%6vg'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "5.253.27.158",
+    "5.253.27.84",
     "api1.wingco.ir",
     "localhost",
     '172.16.3.134',
