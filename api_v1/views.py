@@ -109,7 +109,6 @@ class PackagesListView(APIView):
     def get(self, request, format=None):
         try:
             r = requests.get("http://192.168.163.41:8000/app_v1/PackagesList/")
-            print(r.content.decode('utf-8'))
             return Response(json.loads(r.text), status=r.status_code)
         except requests.exceptions.RequestException as e:
             return Response({'error': 'Connection error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
