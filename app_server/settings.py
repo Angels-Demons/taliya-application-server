@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
     "5.253.27.84",
     "api1.wingco.ir",
     "localhost",
+    '127.0.0.1',
     '172.16.3.134',
     '172.16.3.205',
     '172.116.1.91',
@@ -97,18 +98,18 @@ WSGI_APPLICATION = 'app_server.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
     'default': {
-                'ENGINE': 'django.db.backends.mysql',
-                'NAME': 'taliya_app_server',
-                'USER': 'hamid',
-                'PASSWORD': '123456@qwe',
-                'HOST': '127.0.0.1', # Or an IP Address that your DB is hosted on
-                'PORT': '3306',
-            },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    # 'default': {
+    #             'ENGINE': 'django.db.backends.mysql',
+    #             'NAME': 'taliya_app_server',
+    #             'USER': 'hamid',
+    #             'PASSWORD': '123456@qwe',
+    #             'HOST': '127.0.0.1', # Or an IP Address that your DB is hosted on
+    #             'PORT': '3306',
+    #         },
 }
 
 
