@@ -31,8 +31,8 @@ class SubscriberChargingRecordsView(APIView):
                 "username": "app",
                 "password": "2423@#qefwe!!",
                 "number": number,
-                "from_date": "2019-03-15 18:04:00",
-                "to_date": "2019-07-04 18:04:00",
+                "from_date": from_date,
+                "to_date": to_date,
             }
             data = json.dumps(data)
             r = requests.post("http://192.168.163.41:8000/app_v1/SubscriberChargingRecords/", data=data, headers=headers)
@@ -62,8 +62,8 @@ class SubscriberPackageRecordsView(APIView):
                 "username": "app",
                 "password": "2423@#qefwe!!",
                 "number": number,
-                "from_date": "2019-03-15 18:04:00",
-                "to_date": "2019-07-04 18:04:00",
+                "from_date": from_date,
+                "to_date": to_date,
             }
             data = json.dumps(data)
             r = requests.post("http://192.168.163.41:8000/app_v1/SubscriberPackageRecords/", data=data, headers=headers)
@@ -75,12 +75,9 @@ class SubscriberPackageRecordsView(APIView):
 class PackageDisplayView(APIView):
     authentication_classes = (permissions.IsAuthenticated, )
 
-    def post(self, request, format=None):
+    def get(self, request, format=None):
         try:
             user = request.user
-            json_data = json.loads(request.body)
-            from_date = json_data['from_date']
-            to_date = json_data['to_date']
             number = user.phone
         except:
             return Response({'code': 406,
@@ -119,7 +116,8 @@ class CallSaleView(APIView):
     def get(self, request, format=None):
         try:
             user = request.user
-            number = user.phone
+            json_data = json.loads(request.body)
+            number = int(json_data['number'])
         except:
             return Response({'code': 406,
                              'body': 'INVALID_ARGUMENTS'}, status=status.HTTP_406_NOT_ACCEPTABLE)
@@ -188,7 +186,7 @@ class PackageCallSaleView(APIView):
                 "username": "app",
                 "password": "2423@#qefwe!!",
                 "number": number,
-                "package_id": "package_id",
+                "package_id": package_id,
             }
             data = json.dumps(data)
             r = requests.post("http://192.168.163.41:8000/webservice/PackageCallSale/", data=data, headers=headers)
@@ -204,7 +202,7 @@ class PackageActivationView(APIView):
             user = request.user
             json_data = json.loads(request.body)
             package_id = int(json_data['package_id'])
-            number = user.phone
+            number = int(json_data['number'])
         except:
             return Response({'code': 1,
                              'body': 'INVALID_ARGUMENTS'}, status=status.HTTP_406_NOT_ACCEPTABLE)
